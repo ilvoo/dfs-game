@@ -1,0 +1,31 @@
+.game {
+  display: grid;
+  grid-template-columns: repeat(var(--columns), 40px);
+}
+
+.gameCell {
+  width: 40px;
+  height: 40px;
+
+  font-size: 24px;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+
+  color: black;
+  border: 1px solid var(--accent);
+  transition: .2s all ease-in-out;
+}
+
+.gameCell:hover {
+  background-color: var(--accent);
+}
+
+.gameCell.empty {
+  cursor: default;
+  border: none;
+  background-color: var(--inactive);
+}
