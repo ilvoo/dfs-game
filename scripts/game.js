@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * Represents a list of game symbols converted to Symbols.
  */
@@ -265,8 +267,8 @@ class Game {
    * @param {Game} game - The current Game instance.
    * @returns {void}
    */
-  handleClickCell(event, game) {
-    game.visited = [];
+  handleClickCell(event) {
+    this.visited = [];
 
     const cell = event.target;
 
@@ -276,8 +278,8 @@ class Game {
 
     const { i, j } = cell.dataset;
 
-    const group = game.findConnectedGroup(new Coordinates(+i, +j));
-    game.removeGroup(group);
+    const group = this.findConnectedGroup(new Coordinates(+i, +j));
+    this.removeGroup(group);
   }
 
   /**
@@ -291,7 +293,6 @@ class Game {
     container.classList.add("game");
     container.style = `--columns: ${this.cols}`;
 
-    const game = this;
-    container.addEventListener("click", (e) => this.handleClickCell(e, game));
+    container.addEventListener("click", (e) => this.handleClickCell(e));
   }
 }
