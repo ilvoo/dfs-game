@@ -10,7 +10,7 @@ gameSettingsForm.onsubmit = (event) => {
   const fields = event.target.elements;
 
   const columns = +fields.namedItem("columns").value;
-  const rows = +fields.namedItem("columns").value;
+  const rows = +fields.namedItem("rows").value;
 
   game = new Game(columns, rows);
 };
