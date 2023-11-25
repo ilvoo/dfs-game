@@ -3,7 +3,7 @@
 /**
  * Represents a list of game symbols converted to Symbols.
  */
-const GAME_ITEMS = ["♣", "♢", "♡", "♠"].map((el) => Symbol(el));
+const GAME_SYMBOLS = ["♣", "♢", "♡", "♠"].map((el) => Symbol(el));
 
 /**
  * Generates a random integer between 0 and the given number, n.
@@ -121,10 +121,10 @@ class Game {
    * @param {number} rows - The number of rows in the game field.
    * @param {string} containerId - The id of the HTML-element where the game will be displayed.
    */
-  constructor(cols, rows, containerId) {
-    this.cols = cols ?? 6;
-    this.rows = rows ?? 7;
-    this.containerId = containerId ?? "#game";
+  constructor(cols = 6, rows = 7, containerId = "#game") {
+    this.cols = cols;
+    this.rows = rows;
+    this.containerId = containerId;
     this.init();
     this.grid = this.generateGrid();
     this.visited = [];
@@ -155,10 +155,8 @@ class Game {
    * @returns {GameItem}
    */
   generateGridItem() {
-    const id = GAME_ITEMS[getRandomNumber(GAME_ITEMS.length - 1)];
-    const gameCell = new GameItem(id);
-
-    return gameCell;
+    const symbol = GAME_SYMBOLS[getRandomNumber(GAME_SYMBOLS.length - 1)];
+    return new GameItem(symbol);
   }
 
   /**
@@ -167,17 +165,9 @@ class Game {
    * @returns {GameItem[][]}
    */
   generateGrid() {
-    let gameGrid = [];
-
-    for (let i = 0; i < this.rows; i++) {
-      let row = [];
-
-      for (let j = 0; j < this.cols; j++) {
-        row.push(this.generateGridItem());
-      }
-
-      gameGrid.push(row);
-    }
+    const gameGrid = Array.from({ length: this.rows }, () =>
+      Array.from({ length: this.cols }, () => this.generateGridItem())
+    );
 
     return gameGrid;
   }
@@ -235,8 +225,8 @@ class Game {
    * @returns {void}
    */
   removeGroup(group) {
-    group.forEach((coord) => {
-      this.grid[coord.i][coord.j].isEmpty = true;
+    group.forEach(({ i, j }) => {
+      this.grid[i][j].isEmpty = true;
     });
 
     this.paint();
